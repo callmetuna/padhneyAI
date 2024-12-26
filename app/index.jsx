@@ -1,7 +1,7 @@
-import { Text, View, Button, Image } from "react-native";
+import { Text, View, Button, Alert } from "react-native";
 import React, { useState } from "react";
 import SignUp from "./sign-up"; // Adjust the path if necessary
-import "./output.css"
+import { StyleSheet } from "react-native";
 
 export default function Index() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -10,21 +10,21 @@ export default function Index() {
   const handleBackClick = () => setShowSignUp(false);
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
+    <View style={styles.container}>
       {!showSignUp ? (
         <>
-          <View className="items-center mb-5">
-            <Text className="text-lg font-bold mt-2">Welcome to PandeAI</Text>
-            <Text className="text-center text-gray-600 mt-1 px-4">
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.title}>Welcome to PandeAI</Text>
+            <Text style={styles.description}>
               PandeAI is an advanced AI platform designed to simplify your tasks
               and empower your creativity.
             </Text>
           </View>
           <Button title="Sign Up" onPress={handleSignUpClick} />
-          <View className="mt-4">
+          <View style={styles.buttonSpacing}>
             <Button
               title="Try PandeAI"
-              onPress={() => alert("Try PandeAI clicked!")}
+              onPress={() => Alert.alert("Try PandeAI clicked!")}
               color="#4CAF50"
             />
           </View>
@@ -38,11 +38,39 @@ export default function Index() {
 
 function SignUpScreen({ onBack }) {
   return (
-    <View className="flex-1 justify-center items-center p-5 bg-gray-100">
+    <View style={styles.container}>
       <SignUp />
-      <View className="mt-4">
+      <View style={styles.buttonSpacing}>
         <Button title="Back" onPress={onBack} />
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f7f7f7",
+  },
+  welcomeContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  description: {
+    textAlign: "center",
+    color: "#6b7280",
+    marginTop: 10,
+    paddingHorizontal: 16,
+  },
+  buttonSpacing: {
+    marginTop: 16,
+  },
+});
+
