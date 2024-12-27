@@ -1,7 +1,8 @@
 import { Text, View, Button, Image } from "react-native";
 import React, { useState } from "react";
 import SignUp from "./sign-up"; // Adjust the path if necessary
-import "./output.css"
+import "../global.css"
+
 
 export default function Index() {
   const [showSignUp, setShowSignUp] = useState(false);
