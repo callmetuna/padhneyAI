@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import "./output.css"
+import "nativewind";
 
 function SignupForm() {
     const [fullname, setFullname] = useState('');
@@ -37,8 +37,8 @@ function SignupForm() {
     };
 
     return (
-        <div className='bg-black'>
-            <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+        <div className="w-10 h-10 bg-blue-500">
+            <div className=" p-6 rounded shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
