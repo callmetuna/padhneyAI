@@ -37,7 +37,7 @@ function SignupForm() {
     };
 
     return (
-        <div className="w-10 h-10 bg-blue-500">
+        <div className="w-full h-full bg-blue-200">
             <div className=" p-6 rounded shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
                 <form onSubmit={handleSubmit}>

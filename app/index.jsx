@@ -1,5 +1,5 @@
 import { Text, View, Button, Image } from "react-native";
-import React, { useState } from "react";
+import {React,  useState } from "react";
 import SignUp from "./sign-up"; // Adjust the path if necessary
 import "../global.css"
 
