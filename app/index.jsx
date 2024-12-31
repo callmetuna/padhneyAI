@@ -1,20 +1,21 @@
-import { Text, View, Button, Image } from "react-native";
-import {React,  useState } from "react";
+import { Text, View, Button } from "react-native";
+import { React, useState } from "react";
 import SignUp from "./sign-up"; // Adjust the path if necessary
-import "../global.css"
-
+import Main from "./main"; // Import Main component
+import "../global.css";
 
 export default function Index() {
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [screen, setScreen] = useState("home"); // Track the current screen
 
-  const handleSignUpClick = () => setShowSignUp(true);
-  const handleBackClick = () => setShowSignUp(false);
+  const handleSignUpClick = () => setScreen("signup");
+  const handleTryPandeAIClick = () => setScreen("main");
+  const handleBackClick = () => setScreen("home");
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
-      {!showSignUp ? (
+    <View className="flex-1 justify-center items-center bg-opacity-25 bg-teal-400">
+      {screen === "home" && (
         <>
-          <View className="items-center mb-5">
+          <View className="items-center mb-5  ">
             <Text className="text-lg font-bold mt-2">Welcome to PandeAI</Text>
             <Text className="text-center text-gray-600 mt-1 px-4">
               PandeAI is an advanced AI platform designed to simplify your tasks
@@ -25,14 +26,14 @@ export default function Index() {
           <View className="mt-4">
             <Button
               title="Try PandeAI"
-              onPress={() => alert("Try PandeAI clicked!")}
+              onPress={handleTryPandeAIClick}
               color="#4CAF50"
             />
           </View>
         </>
-      ) : (
-        <SignUpScreen onBack={handleBackClick} />
       )}
+      {screen === "signup" && <SignUpScreen onBack={handleBackClick} />}
+      {screen === "main" && <MainScreen onBack={handleBackClick} />}
     </View>
   );
 }
@@ -41,6 +42,17 @@ function SignUpScreen({ onBack }) {
   return (
     <View className="flex-1 justify-center items-center p-5 bg-gray-100">
       <SignUp />
+      <View className="mt-4">
+        <Button title="Back" onPress={onBack} />
+      </View>
+    </View>
+  );
+}
+
+function MainScreen({ onBack }) {
+  return (
+    <View className="flex-1 justify-center items-center p-5 bg-gray-100">
+      <Main />
       <View className="mt-4">
         <Button title="Back" onPress={onBack} />
       </View>
