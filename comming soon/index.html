@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background:url('https://img.freepik.com/free-vector/gradient-technological-background_23-2148884155.jpg?t=st=1736252286~exp=1736255886~hmac=718de7887b079d537e343a2e5cf7feea704c6ef81a4f9e224e6a80e4ac5eb854&w=1060') no-repeat center center/cover; ;
+            color: #000000;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo img {
+    position: absolute; /* Position it relative to the body */
+    top: 50%; /* Position it vertically in the middle */
+    left: 50%; /* Position it horizontally in the middle */
+    transform: translate(-50%, -225%); /* Adjust to center it exactly */
+    z-index: 15; /* Ensure it stays above other elements */
+    height: 150px; /* Adjust the height of the logo */
+    width: auto; /* Maintain the aspect ratio */
+}
+
+        .container {
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .timer {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            font-size: 2.5rem;
+        }
+        .time-box {
+            background: rgba(17, 4, 58, 0.2);
+            border-radius: 5px;
+            padding: 1rem;
+            width: 72px;
+        }
+        .label {
+            font-size: 1rem;
+            margin-top: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="background.jpg-removebg-preview.png" alt="logo">
+        
+    </div>
+    <div class="container">
+        <h1>Hold on guys. We have something special coming</h1>
+        <p>Our website is on the way. Stay tuned!</p>
+        <div class="timer" id="timer">
+            <div class="time-box">
+                <div id="days">00</div>
+                <div class="label">Days</div>
+            </div>
+            <div class="time-box">
+                <div id="hours">00</div>
+                <div class="label">Hours</div>
+            </div>
+            <div class="time-box">
+                <div id="minutes">00</div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="time-box">
+                <div id="seconds">00</div>
+                <div class="label">Seconds</div>
+        
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the target date and time
+        const targetDate = new Date("2025-01-12T20:10:10");
+
+        function updateTimer() {
+            const now = new Date();
+            const timeRemaining = targetDate - now;
+
+            if (timeRemaining <= 0) {
+                document.getElementById("timer").innerHTML = "We are live now!";
+                return;
+            }
+
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = days.toString().padStart(2, "0");
+            document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+            document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+            document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
