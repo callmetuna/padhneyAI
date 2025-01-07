@@ -10,7 +10,7 @@ export default function RootLayout() {
       />
       {/* Sign Up Screen */}
       <Stack.Screen
-        name="signup"
+        name="sign-up"
         options={{ headerShown: false }} // Customize the title for the "signup" screen
       />
       {/* Main Screen */}

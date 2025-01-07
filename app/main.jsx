@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, TextInput, FlatList, Dimensio
 import { useRouter } from "expo-router";
 import * as DocumentPicker from "expo-document-picker";
 import RNPickerSelect from "react-native-picker-select";
+import Ionicons from "react-native-vector-icons/Ionicons"; // Import the icons
 
 const SidebarLayout = () => {
   const router = useRouter();
@@ -10,10 +11,10 @@ const SidebarLayout = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [messages, setMessages] = useState([
     { id: "1", text: "Hello, how can I assist you today?" },
-    { id: "2", text: "I am a virtual assistant! upload your pdf or file using attach file and ask you pdf any question" },
+    { id: "2", text: "I am a virtual assistant! Upload your PDF or file and ask me any question about it." },
   ]);
   const [selectedModel, setSelectedModel] = useState("Model A");
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // State for dropdown visibility
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const handleSendMessage = (message) => {
     if (message.trim()) {
@@ -53,7 +54,7 @@ const SidebarLayout = () => {
         {/* Sidebar */}
         <View className="w-1/4 bg-gray-800 text-white h-full flex flex-col justify-between">
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            {/* Login and Signup Buttons (Now on the Left side of the Sidebar) */}
+            {/* Login and Signup Buttons */}
             <View className="flex-row justify-start py-4 px-4">
               <TouchableOpacity
                 onPress={() => console.log("Login clicked")}
@@ -73,12 +74,13 @@ const SidebarLayout = () => {
             {/* ChatGPT Title */}
             <View className="py-6 px-4 border-b border-gray-700 flex-row justify-between items-center">
               <Text className="text-xl font-bold text-gray-100">PandneyAI</Text>
-              {/* New Chat Button (small) */}
+              {/* New Chat Button (with Icon) */}
               <TouchableOpacity
                 onPress={handleNewChat}
-                className="bg-blue-600 py-1 px-3 rounded-md shadow-md"
+                className="bg-blue-600 py-1 px-3 rounded-md shadow-md flex-row items-center"
               >
-                <Text className="text-white font-semibold text-xs">New Chat</Text>
+                <Ionicons name="chatbox-ellipses" size={16} color="white" />
+                <Text className="text-white font-semibold text-xs ml-1">New Chat</Text>
               </TouchableOpacity>
             </View>
 
@@ -117,8 +119,8 @@ const SidebarLayout = () => {
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => {
-                      setMessages([item]); // Optionally set the selected chat as active
-                      setActiveTab("chat"); // Switch to chat tab
+                      setMessages([item]);
+                      setActiveTab("chat");
                     }}
                     className="py-2 px-4 mt-2 bg-gray-700 rounded-md"
                   >
@@ -153,12 +155,12 @@ const SidebarLayout = () => {
           {/* Chat Interface */}
           {activeTab === "chat" && (
             <View className="flex-1 p-4 bg-gray-100">
-              {/* Select Model Button */}
+              {/* Select Model Button (with Icon) */}
               <TouchableOpacity
-                onPress={() => setIsDropdownVisible(!isDropdownVisible)} // Toggle dropdown visibility
-                className="w-32 py-1 px-2 bg-gray-700 text-white rounded-md text-xs" // Smaller button
+                onPress={() => setIsDropdownVisible(!isDropdownVisible)}
+                className="w-32 py-1 px-2 bg-gray-700 text-white rounded-md text-xs flex-row items-center"
               >
-                <Text className="font-semibold">Select Model</Text>
+                <Ionicons name="settings-sharp" size={16} color="white" />
               </TouchableOpacity>
 
               {/* Conditionally render the dropdown */}
@@ -167,7 +169,7 @@ const SidebarLayout = () => {
                   <RNPickerSelect
                     onValueChange={(value) => {
                       setSelectedModel(value);
-                      setIsDropdownVisible(false); // Hide dropdown after selecting a model
+                      setIsDropdownVisible(false);
                     }}
                     value={selectedModel}
                     items={[
@@ -194,7 +196,7 @@ const SidebarLayout = () => {
               )}
 
               {/* Chat Box */}
-              <View className="flex-1 p-3 bg-gray-200 rounded-lg p-4">
+              <View className="flex-1 p-3 bg-gray-200 rounded-lg">
                 <FlatList
                   data={messages}
                   renderItem={({ item }) => (
@@ -213,12 +215,12 @@ const SidebarLayout = () => {
 
               {/* Input Box for Chat */}
               <View className="flex-row items-center mt-4 border-t border-gray-300 pt-2">
-                {/* Attach File Button */}
+                {/* Attach File Button (with Icon) */}
                 <TouchableOpacity
                   onPress={handleAttachFile}
-                  className="bg-gray-700 p-3 rounded-md"
+                  className="bg-gray-700 p-3 rounded-md flex-row items-center"
                 >
-                  <Text className="text-white font-semibold">Attach File</Text>
+                  <Ionicons name="attach" size={20} color="white" />
                 </TouchableOpacity>
 
                 <TextInput
@@ -226,11 +228,12 @@ const SidebarLayout = () => {
                   className="flex-1 p-2 ml-2 border border-gray-300 rounded-md"
                   onSubmitEditing={(e) => handleSendMessage(e.nativeEvent.text)}
                 />
+                {/* Send Button (with Icon) */}
                 <TouchableOpacity
                   onPress={() => handleSendMessage(searchQuery)}
-                  className="ml-2 bg-blue-500 p-2 rounded-md"
+                  className="ml-2 bg-blue-500 p-2 rounded-md flex-row items-center"
                 >
-                  <Text className="text-white font-semibold">Send</Text>
+                  <Ionicons name="send" size={20} color="white" />
                 </TouchableOpacity>
               </View>
             </View>
