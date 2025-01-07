@@ -1,60 +1,38 @@
-import { Text, View, Button } from "react-native";
-import { React, useState } from "react";
-import SignUp from "./sign-up"; // Adjust the path if necessary
-import Main from "./main"; // Import Main component
-import "../global.css";
+import { Text, View, TouchableOpacity } from "react-native";
+import { Link } from "expo-router"; // Import Link component for navigation
+import "../global.css"; // Ensure Tailwind is configured
 
 export default function Index() {
-  const [screen, setScreen] = useState("home"); // Track the current screen
-
-  const handleSignUpClick = () => setScreen("signup");
-  const handleTryPandeAIClick = () => setScreen("main");
-  const handleBackClick = () => setScreen("home");
-
   return (
-    <View className="flex-1 justify-center items-center bg-opacity-25 bg-teal-400">
-      {screen === "home" && (
-        <>
-          <View className="items-center mb-5  ">
-            <Text className="text-lg font-bold mt-2">Welcome to PandeAI</Text>
-            <Text className="text-center text-gray-600 mt-1 px-4">
-              PandeAI is an advanced AI platform designed to simplify your tasks
-              and empower your creativity.
-            </Text>
+    <View className="flex-1 justify-center items-center bg-gradient-to-r from-teal-400 to-blue-500">
+      <View className="bg-blue-100 bg-opacity-90 rounded-xl shadow-xl w-4/5 h-4/5 p-8">
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-3xl font-extrabold text-gray-800 mb-4 text-center">
+            Welcome to PandeAI
+          </Text>
+          <Text className="text-lg text-gray-700 text-center mb-8">
+            PandeAI is an advanced AI platform designed to simplify your tasks
+            and empower your creativity.
+          </Text>
+          <View className="space-y-4">
+            {/* Navigate to Sign Up page */}
+            <Link
+              href="/sign-up" // Linking to the signup page
+              className="bg-blue-500 py-3 px-5 rounded-md shadow-sm"
+            >
+              <Text className="text-white text-sm font-semibold">Sign Up</Text>
+            </Link>
+            {/* Navigate to Main page */}
+            <Link
+              href="/main" // Linking to the main page
+              className="bg-green-600 py-3 px-5 rounded-md shadow-sm"
+            >
+              <Text className="text-white text-sm font-semibold">
+                Try PandeAI
+              </Text>
+            </Link>
           </View>
-          <Button title="Sign Up" onPress={handleSignUpClick} />
-          <View className="mt-4">
-            <Button
-              title="Try PandeAI"
-              onPress={handleTryPandeAIClick}
-              color="#4CAF50"
-            />
-          </View>
-        </>
-      )}
-      {screen === "signup" && <SignUpScreen onBack={handleBackClick} />}
-      {screen === "main" && <MainScreen onBack={handleBackClick} />}
-    </View>
-  );
-}
-
-function SignUpScreen({ onBack }) {
-  return (
-    <View className="flex-1 justify-center items-center p-5 bg-gray-100">
-      <SignUp />
-      <View className="mt-4">
-        <Button title="Back" onPress={onBack} />
-      </View>
-    </View>
-  );
-}
-
-function MainScreen({ onBack }) {
-  return (
-    <View className="flex-1 justify-center items-center p-5 bg-gray-100">
-      <Main />
-      <View className="mt-4">
-        <Button title="Back" onPress={onBack} />
+        </View>
       </View>
     </View>
   );
