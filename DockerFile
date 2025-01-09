@@ -1,0 +1,42 @@
+# Multi-stage build
+# Build stage for the backend
+FROM python:3.9-slim-buster AS backend-builder
+
+WORKDIR /app/backend
+
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY backend/app /app/backend/app
+
+# Build stage for the pdf-service
+FROM golang:1.21-alpine AS pdf-builder
+
+WORKDIR /app/pdf-service
+COPY pdf-service/go.mod pdf-service/go.sum ./
+RUN go mod download
+COPY pdf-service/. .
+RUN go build -o /pdf-service
+
+# Final image
+FROM python:3.9-slim-buster
+
+WORKDIR /app
+
+# Copy backend from builder
+COPY --from=backend-builder /app/backend /app/backend
+
+# Copy pdf-service from builder
+COPY --from=pdf-builder /pdf-service /pdf-service
+
+# Copy static PDF for testing
+COPY test.pdf /app/test.pdf
+
+# Expose ports
+EXPOSE 8000
+EXPOSE 8081
+
+# Start both services (using a simple script for now)
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
