@@ -1,0 +1,58 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build PDF Service
+        working-directory: pdf-service
+        run: go build -o pdf-service
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        working-directory: backend
+        run: pip install --no-cache-dir -r requirements.txt
+
+      - name: Run Backend Tests
+        working-directory: backend
+        run: |
+          python -m unittest discover -v # Replace with your actual tests later
+          # Start the backend in the background
+          uvicorn app.main:app --host 127.0.0.1 --port 8000 --log-level critical &
+          sleep 5 # Give the backend time to start
+          # Test the /hello endpoint
+          curl http://127.0.0.1:8000/hello
+          # Test the /process_pdf endpoint with a file upload
+          curl -X POST -F "pdf_file=@test.pdf" http://127.0.0.1:8000/process_pdf
+          killall uvicorn # Stop the backend
+
+      - name: Build and Test Docker Image
+        run: |
+          docker build -t test-image .
+          docker run -d -p 8000:8000 -p 8081:8081 --name test-container test-image
+          sleep 5 # Give the containers time to start
+          curl http://localhost:8000/hello
+          curl -X POST -F "pdf_file=@test.pdf" http://localhost:8000/process_pdf
+          docker stop test-container
+          docker rm test-container
